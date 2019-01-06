@@ -10,11 +10,6 @@ const countCache = {
   yourei: {}
 };
 
-function isVocabLesson(): boolean {
-  const mainInfo = document.getElementById("main-info");
-  return mainInfo && mainInfo.className === "vocabulary";
-}
-
 export function createMutationObserver(): void {
   Log.debug("createMutationObserver");
 
@@ -26,24 +21,6 @@ export function createMutationObserver(): void {
 
   const optAttrs = { attributes: true };
   obs.observe(document.getElementById("supplement-voc-meaning"), optAttrs);
-}
-
-function isTargetInlineStyleDisplayBlock(
-  mutationRecord: MutationRecord
-): boolean {
-  const node = mutationRecord.target;
-
-  if (node instanceof HTMLElement) {
-    // https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap
-    const attributes = node.attributes;
-
-    // https://developer.mozilla.org/en-US/docs/Web/API/Attr
-    const styleAttr = attributes.getNamedItem("style");
-
-    return styleAttr.value === "display: block;";
-  }
-
-  return false;
 }
 
 function maybeQueryYourei(mutationRecord: MutationRecord): void {
@@ -73,6 +50,29 @@ function maybeQueryYourei(mutationRecord: MutationRecord): void {
   }
 
   queryYoureiThenInsertResults(vocab);
+}
+
+function isVocabLesson(): boolean {
+  const mainInfo = document.getElementById("main-info");
+  return mainInfo && mainInfo.className === "vocabulary";
+}
+
+function isTargetInlineStyleDisplayBlock(
+  mutationRecord: MutationRecord
+): boolean {
+  const node = mutationRecord.target;
+
+  if (node instanceof HTMLElement) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap
+    const attributes = node.attributes;
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Attr
+    const styleAttr = attributes.getNamedItem("style");
+
+    return styleAttr.value === "display: block;";
+  }
+
+  return false;
 }
 
 function queryYoureiThenInsertResults(vocab: string): void {

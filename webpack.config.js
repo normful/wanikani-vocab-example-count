@@ -18,7 +18,7 @@ module.exports = {
   module: {
     rules: [{ test: /\.tsx?$/, loader: 'ts-loader' }],
   },
-  mode: 'development',
+  mode: 'none', // set to either 'none' or 'development'
   optimization: {
     minimize: false,
     concatenateModules: true,
